@@ -1,17 +1,6 @@
 local ABR_UnitClass = ({UnitClass("player")})[2]
 local merchantIndexes,numReagentsTable
-local reagents = {
-	["DEATH KNIGHT"] = {},
-	["DRUID"] = {},
-	["HUNTER"] = {},
-	["MAGE"] = { 17020, 17031, 17032 }, -- Arcane Powder, Rune of Teleportation, Rune of Portals
-	["PALADIN"] = { 17033, 21177 }, -- Symbol of Divinity, Symbol of Kings
-	["PRIEST"] = {},
-	["ROGUE"] = {},
-	["SHAMAN"] = { 17030 },
-	["WARLOCK"] = { 5565, 16583 },
-	["WARRIOR"] = {}
-}
+local reagents = {}
 local rWater = { 159, 1179, 1205, 1708, 1645, 8766 } -- [1]Refreshing Spring Water(1-4), [2]Ice Cold Milk(5-14), [3]Melon Juice(15-24), [4]Sweet Nector(25-34), [5]Moonberry Juice(35-44), [6]Morning Glory Dew(45+)
 local rFood = { 117, 2287, 3770, 3771, 4599, 8952} -- [1]Tough Jerky(1-4), [2]Haunch of Meat(5-14), [3]Mutton Chop(15-24), [4]Wild Hog Shank(25-34), [5]Cured Ham Steak(35-44), [6]Roasted Quail(45+)
 local rCaster = { DRUID = true, HUNTER = true, PALADIN = true, PRIEST = true, SHAMAN = true, WARLOCK = true, MAGE = true }
@@ -54,16 +43,18 @@ end
 function AutoBuyReagents_GetSpellInfo(spellName)
     local spellNamei,spellRank,spellCache
     for i=1, 500 do
-        spellNamei,spellRank = GetSpellName(i,BOOKTYPE_SPELL);
+        spellNamei,spellRank = GetSpellName(i,BOOKTYPE_SPELL)
         if not spellNamei then break end
         if spellNamei == spellName then
-            _,_,spellRank = string.find(spellRank, " (%d+)$");
-            spellCache = tonumber(spellRank);
+			_,_,spellRank = string.find(spellRank, " (%d+)$")
+			if not spellRank then spellRank = 1 end
+			spellCache = tonumber(spellRank)
         end
     end
     return spellCache;
 end
 function AutoBuyReagents_GetReagents()
+	reagents[ABR_UnitClass] = {}
 	if ABR_UnitClass == "DRUID" then
 		reagents[ABR_UnitClass][1] = rDruidRebirth[AutoBuyReagents_GetSpellInfo("Rebirth")]
 		reagents[ABR_UnitClass][2] = rDruidGOTW[AutoBuyReagents_GetSpellInfo("Gift of the Wild")]
@@ -75,6 +66,21 @@ function AutoBuyReagents_GetReagents()
 		else
 			if AutoBuyReagents_GetSpellInfo("Prayer of Spirit") or AutoBuyReagents_GetSpellInfo("Prayer of Shadow Protection") then reagents[ABR_UnitClass][1] = 17029 end
 		end
+	elseif ABR_UnitClass == "MAGE" then
+		if AutoBuyReagents_GetSpellInfo("Arcane Brilliance") then reagents[ABR_UnitClass][1] = 17020 end
+		if AutoBuyReagents_GetSpellInfo("Teleport: Stormwind") or AutoBuyReagents_GetSpellInfo("Teleport: Orgrimmar") or AutoBuyReagents_GetSpellInfo("Teleport: Darnassus") or AutoBuyReagents_GetSpellInfo("Teleport: Thunder Bluff")
+		or AutoBuyReagents_GetSpellInfo("Teleport: Undercity") or AutoBuyReagents_GetSpellInfo("Teleport: Ironforge") then reagents[ABR_UnitClass][2] = 17031 end
+		if AutoBuyReagents_GetSpellInfo("Portal: Stormwind") or AutoBuyReagents_GetSpellInfo("Portal: Orgrimmar") or AutoBuyReagents_GetSpellInfo("Portal: Undercity") or AutoBuyReagents_GetSpellInfo("Portal: Ironforge")
+		or AutoBuyReagents_GetSpellInfo("Portal: Darnassus") or AutoBuyReagents_GetSpellInfo("Portal: Thunder Bluff") then reagents[ABR_UnitClass][3] = 17032 end
+	elseif ABR_UnitClass == "PALADIN" then
+		if AutoBuyReagents_GetSpellInfo("Divine Intervention") then reagents[ABR_UnitClass][1] = 17033 end
+		if AutoBuyReagents_GetSpellInfo("Greater Blessing of Might") or AutoBuyReagents_GetSpellInfo("Greater Blessing of Wisdom") or AutoBuyReagents_GetSpellInfo("Greater Blessing of Salvation") or AutoBuyReagents_GetSpellInfo("Greater Blessing of Light")
+		or AutoBuyReagents_GetSpellInfo("Greater Blessing of Kings") or AutoBuyReagents_GetSpellInfo("Greater Blessing of Sanctuary") then reagents[ABR_UnitClass][2] = 21177 end
+	elseif ABR_UnitClass == "SHAMAN" then
+		if AutoBuyReagents_GetSpellInfo("Reincarnation") then reagents[ABR_UnitClass][1] = 17030 end
+	elseif ABR_UnitClass == "WARLOCK" then
+		if AutoBuyReagents_GetSpellInfo("Inferno") then reagents[ABR_UnitClass][1] = 5565 end
+		if AutoBuyReagents_GetSpellInfo("Ritual of Doom") then reagents[ABR_UnitClass][2] = 16583 end
 	end
 end
 function AutoBuyReagents_CorrectReagents()

@@ -1,146 +1,119 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/..\..\FrameXML\UI.xsd">
 <Script file="AutoBuyReagents.lua" />
-<EditBox name="ReagentNumBoxTemplate" letters="3" numeric="true" hidden="true" virtual="true">
-	<Size>
-		<AbsDimension x="40" y="32"></AbsDimension>
-	</Size>
-	<Layers>
-		<Layer level="BACKGROUND">
-			<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
-				<Size>
-					<AbsDimension x="30" y="32"></AbsDimension>
-				</Size>
-				<Anchors>
-					<Anchor point="LEFT">
-						<Offset>
-							<AbsDimension x="-10" y="0"></AbsDimension>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<TexCoords left="0" right="0.2" top="0" bottom="1.0"></TexCoords>
-			</Texture>
-			<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
-				<Size>
-					<AbsDimension x="30" y="32"></AbsDimension>
-				</Size>
-				<Anchors>
-					<Anchor point="RIGHT">
-						<Offset>
-							<AbsDimension x="10" y="0"></AbsDimension>
-						</Offset>
-					</Anchor>
-				</Anchors>
-				<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"></TexCoords>
-			</Texture>
-		</Layer>
-	</Layers>
-	<FontString inherits="ChatFontNormal"/>
-	<Scripts>
-		<OnEnterPressed>
-			AutoBuyReagents_SaveData()
-			AutoBuyReagentsFrame:Hide()
-		</OnEnterPressed>													
-		<OnEscapePressed>
-			AutoBuyReagents_SaveData()
-			AutoBuyReagentsFrame:Hide()
-		</OnEscapePressed>
-	</Scripts>
-</EditBox>
-<Frame name="AutoBuyReagentsFrame" enableMouse="true" movable="true" hidden="true">
-	<Size> 
-		<AbsDimension x="330" y="230"/> 
-	</Size>
-	<Anchors>
-		<Anchor point="CENTER"/>
-	</Anchors>
-	<TitleRegion>
-		<Size>
-			<AbsDimension x="400" y="20" />
-		</Size>
-		<Anchors>
-			<Anchor point="TOP"/>
-			<Anchor point="CENTER"/>
-		</Anchors>
-	</TitleRegion>
-	<Backdrop bgFile="Interface\TutorialFrame\TutorialFrameBackground" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
-		<EdgeSize><AbsValue val="16"/></EdgeSize>
-		<TileSize><AbsValue val="32"/></TileSize>
-		<BackgroundInsets><AbsInset left="5" right="5" top="5" bottom="5"/></BackgroundInsets>
-	</Backdrop>
-	<Layers>
-		<Layer level="BACKGROUND">
-			<Texture>
-				<Color r="0.0" g="0.0" b="0.0" a="0.8" />
-			</Texture>
-		</Layer>
-		<Layer name="Layer1" level="OVERLAY">
-			<FontString name="Title" inherits="ChatFontNormal" text="Auto Buy Reagents">
-				<Color r="0.7" g="0.0" b="0.0" a="1.0"/>
-				<Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="-8" /></Offset></Anchor><Anchor point="CENTER"/></Anchors>
-				<Shadow><offset><AbsDimension x="1" y="1"/></offset><color r="0" g="0" b="0"/></Shadow>
-			</FontString>
-			<FontString name="Description" inherits="ChatFontNormal" justifyH="LEFT" text="If you want to have ABR buy the reagent for your |nclass, check the box of the reagent and input a |nnumber." >
-				<Color r="1.0" g="1.0" b="1.0" a="1.0"/>
-				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-30"/></Offset></Anchor></Anchors>
-			</FontString>
-			<FontString name="ReagentFont1" inherits="ChatFontNormal" justifyH="LEFT">
-				<Size><AbsDimension x="180" y="32"/></Size>
-				<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="50" y="-94"/></Offset></Anchor></Anchors>
-			</FontString>
-			<FontString name="ReagentFont2" inherits="ChatFontNormal" justifyH="LEFT">
-				<Size><AbsDimension x="180" y="32"/></Size>
-				<Anchors><Anchor point="TOP" relativeTo="ReagentFont1" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"/></Offset></Anchor></Anchors>
-			</FontString>
-			<FontString name="ReagentFont3" inherits="ChatFontNormal" justifyH="LEFT">
-				<Size><AbsDimension x="180" y="32"/></Size>
-				<Anchors><Anchor point="TOP" relativeTo="ReagentFont2" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"/></Offset></Anchor></Anchors>
-			</FontString>
-			<FontString name="ReagentFont4" inherits="ChatFontNormal" justifyH="LEFT">
-				<Size><AbsDimension x="180" y="32"/></Size>
-				<Anchors><Anchor point="TOP" relativeTo="ReagentFont3" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"/></Offset></Anchor></Anchors>
-			</FontString>
-		</Layer>
-	</Layers>
-	<Frames>
-		<CheckButton name="ReagentCheckButton1" inherits="OptionsCheckButtonTemplate" id="1" hidden="true"><Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-95"></AbsDimension></Offset></Anchor></Anchors></CheckButton>
-		<EditBox name="ReagentNumBox1" inherits="ReagentNumBoxTemplate"><Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="235" y="-95"></AbsDimension></Offset></Anchor></Anchors></EditBox>
-		<CheckButton name="ReagentCheckButton2" inherits="OptionsCheckButtonTemplate" id="2" hidden="true"><Anchors><Anchor point="TOP" relativeTo="ReagentCheckButton1" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></CheckButton>
-		<EditBox name="ReagentNumBox2" inherits="ReagentNumBoxTemplate"><Anchors><Anchor point="TOP" relativeTo="ReagentNumBox1" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></EditBox>
-		<CheckButton name="ReagentCheckButton3" inherits="OptionsCheckButtonTemplate" id="3" hidden="true"><Anchors><Anchor point="TOP" relativeTo="ReagentCheckButton2" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></CheckButton>
-		<EditBox name="ReagentNumBox3" inherits="ReagentNumBoxTemplate"><Anchors><Anchor point="TOP" relativeTo="ReagentNumBox2" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></EditBox>
-		<CheckButton name="ReagentCheckButton4" inherits="OptionsCheckButtonTemplate" id="4" hidden="true"><Anchors><Anchor point="TOP" relativeTo="ReagentCheckButton3" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></CheckButton>
-		<EditBox name="ReagentNumBox4" inherits="ReagentNumBoxTemplate"><Anchors><Anchor point="TOP" relativeTo="ReagentNumBox3" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></EditBox>
-	</Frames>
-	<Scripts>
-		<OnShow>
-			AutoBuyReagents_LoadPresets()
-		</OnShow>
-		<OnEscapePressed>
-			if AutoBuyReagentsFrame:IsVisible() then AutoBuyReagentsFrame:Hide(); end
-		</OnEscapePressed>
-		<OnLoad>
-			AutoBuyReagents_OnLoad();
-		</OnLoad>
-		<OnEvent>
-			AutoBuyReagents_OnEvent();
-		</OnEvent>
-	</Scripts>
-</Frame>
-
-<Frame name="ABRButtonFrame" parent="MerchantFrame">
-	<Size>
-		<AbsDimension x="50" y="18"/>
-	</Size>
-	<Frames>
-		<Button name="ABRButton" inherits="GameMenuButtonTemplate" parent="ABRButtonFrame" text="ABR">
-			<Size><AbsDimension x="50" y="18"/></Size>
-			<Anchors><Anchor point="TOPRIGHT" relativeTo="MerchantFrame" relativePoint="TOPRIGHT"><Offset><AbsDimension x="-58" y="-15"/></Offset></Anchor></Anchors>
-			<Scripts>
-				<OnClick>
-					if AutoBuyReagentsFrame:IsVisible() then AutoBuyReagentsFrame:Hide() AutoBuyReagents_SaveData() else AutoBuyReagentsFrame:Show() end
-				</OnClick>
-			</Scripts>
-		</Button>
-	</Frames>
-</Frame>
+	<EditBox name="ReagentNumBoxTemplate" letters="3" numeric="true" hidden="true" virtual="true">
+		<Size><AbsDimension x="40" y="32"></AbsDimension></Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Left">
+					<Size><AbsDimension x="30" y="32"></AbsDimension></Size>
+					<Anchors><Anchor point="LEFT"><Offset><AbsDimension x="-10" y="0"></AbsDimension></Offset></Anchor></Anchors>
+					<TexCoords left="0" right="0.2" top="0" bottom="1.0"></TexCoords>
+				</Texture>
+				<Texture file="Interface\ChatFrame\UI-ChatInputBorder-Right">
+					<Size><AbsDimension x="30" y="32"></AbsDimension></Size>
+					<Anchors><Anchor point="RIGHT"><Offset><AbsDimension x="10" y="0"></AbsDimension></Offset></Anchor></Anchors>
+					<TexCoords left="0.7" right="1.0" top="0" bottom="1.0"></TexCoords>
+				</Texture>
+			</Layer>
+		</Layers>
+		<FontString inherits="ChatFontNormal"/>
+		<Scripts>
+			<OnEnterPressed>
+				AutoBuyReagents_SaveData()
+				AutoBuyReagentsFrame:Hide()
+			</OnEnterPressed>													
+			<OnEscapePressed>
+				AutoBuyReagents_SaveData()
+				AutoBuyReagentsFrame:Hide()
+			</OnEscapePressed>
+		</Scripts>
+	</EditBox>
+	<Frame name="AutoBuyReagentsFrame" enableMouse="true" movable="true" hidden="true">
+		<Size><AbsDimension x="330" y="230"/> </Size>
+		<Anchors><Anchor point="CENTER"/></Anchors>
+		<TitleRegion>
+			<Size><AbsDimension x="400" y="20" /></Size>
+			<Anchors>
+				<Anchor point="TOP"/>
+				<Anchor point="CENTER"/>
+			</Anchors>
+		</TitleRegion>
+		<Backdrop bgFile="Interface\TutorialFrame\TutorialFrameBackground" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<EdgeSize><AbsValue val="16"/></EdgeSize>
+			<TileSize><AbsValue val="32"/></TileSize>
+			<BackgroundInsets><AbsInset left="5" right="5" top="5" bottom="5"/></BackgroundInsets>
+		</Backdrop>
+		<Layers>
+			<Layer level="BACKGROUND">
+				<Texture>
+					<Color r="0.0" g="0.0" b="0.0" a="0.8" />
+				</Texture>
+			</Layer>
+			<Layer name="Layer1" level="OVERLAY">
+				<FontString name="Title" inherits="ChatFontNormal" text="Auto Buy Reagents">
+					<Color r="0.7" g="0.0" b="0.0" a="1.0"/>
+					<Anchors><Anchor point="TOP"><Offset><AbsDimension x="0" y="-8" /></Offset></Anchor><Anchor point="CENTER"/></Anchors>
+					<Shadow><offset><AbsDimension x="1" y="1"/></offset><color r="0" g="0" b="0"/></Shadow>
+				</FontString>
+				<FontString name="Description" inherits="ChatFontNormal" justifyH="LEFT" text="If you want to have ABR buy the reagent for your |nclass, check the box of the reagent and input a |nnumber." >
+					<Color r="1.0" g="1.0" b="1.0" a="1.0"/>
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-30"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString name="ReagentFont1" inherits="ChatFontNormal" justifyH="LEFT">
+					<Size><AbsDimension x="180" y="32"/></Size>
+					<Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="50" y="-94"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString name="ReagentFont2" inherits="ChatFontNormal" justifyH="LEFT">
+					<Size><AbsDimension x="180" y="32"/></Size>
+					<Anchors><Anchor point="TOP" relativeTo="ReagentFont1" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString name="ReagentFont3" inherits="ChatFontNormal" justifyH="LEFT">
+					<Size><AbsDimension x="180" y="32"/></Size>
+					<Anchors><Anchor point="TOP" relativeTo="ReagentFont2" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"/></Offset></Anchor></Anchors>
+				</FontString>
+				<FontString name="ReagentFont4" inherits="ChatFontNormal" justifyH="LEFT">
+					<Size><AbsDimension x="180" y="32"/></Size>
+					<Anchors><Anchor point="TOP" relativeTo="ReagentFont3" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"/></Offset></Anchor></Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+		<Frames>
+			<CheckButton name="ReagentCheckButton1" inherits="OptionsCheckButtonTemplate" hidden="true"><Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="10" y="-95"></AbsDimension></Offset></Anchor></Anchors></CheckButton>
+			<EditBox name="ReagentNumBox1" inherits="ReagentNumBoxTemplate"><Anchors><Anchor point="TOPLEFT"><Offset><AbsDimension x="235" y="-95"></AbsDimension></Offset></Anchor></Anchors></EditBox>
+			<CheckButton name="ReagentCheckButton2" inherits="OptionsCheckButtonTemplate" hidden="true"><Anchors><Anchor point="TOP" relativeTo="ReagentCheckButton1" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></CheckButton>
+			<EditBox name="ReagentNumBox2" inherits="ReagentNumBoxTemplate"><Anchors><Anchor point="TOP" relativeTo="ReagentNumBox1" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></EditBox>
+			<CheckButton name="ReagentCheckButton3" inherits="OptionsCheckButtonTemplate" hidden="true"><Anchors><Anchor point="TOP" relativeTo="ReagentCheckButton2" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></CheckButton>
+			<EditBox name="ReagentNumBox3" inherits="ReagentNumBoxTemplate"><Anchors><Anchor point="TOP" relativeTo="ReagentNumBox2" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></EditBox>
+			<CheckButton name="ReagentCheckButton4" inherits="OptionsCheckButtonTemplate" hidden="true"><Anchors><Anchor point="TOP" relativeTo="ReagentCheckButton3" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></CheckButton>
+			<EditBox name="ReagentNumBox4" inherits="ReagentNumBoxTemplate"><Anchors><Anchor point="TOP" relativeTo="ReagentNumBox3" relativePoint="BOTTOM"><Offset><AbsDimension x="0" y="0"></AbsDimension></Offset></Anchor></Anchors></EditBox>
+		</Frames>
+		<Scripts>
+			<OnShow>
+				AutoBuyReagents_LoadPresets()
+			</OnShow>
+			<OnEscapePressed>
+				if AutoBuyReagentsFrame:IsVisible() then AutoBuyReagentsFrame:Hide(); end
+			</OnEscapePressed>
+			<OnLoad>
+				AutoBuyReagents_OnLoad();
+			</OnLoad>
+			<OnEvent>
+				AutoBuyReagents_OnEvent();
+			</OnEvent>
+		</Scripts>
+	</Frame>
+	<Frame name="ABRButtonFrame" parent="MerchantFrame">
+		<Size><AbsDimension x="50" y="18"/></Size>
+		<Frames>
+			<Button name="ABRButton" inherits="GameMenuButtonTemplate" parent="ABRButtonFrame" text="ABR">
+				<Size><AbsDimension x="50" y="18"/></Size>
+				<Anchors><Anchor point="TOPRIGHT" relativeTo="MerchantFrame" relativePoint="TOPRIGHT"><Offset><AbsDimension x="-58" y="-15"/></Offset></Anchor></Anchors>
+				<Scripts>
+					<OnClick>
+						if AutoBuyReagentsFrame:IsVisible() then AutoBuyReagentsFrame:Hide() AutoBuyReagents_SaveData() else AutoBuyReagentsFrame:Show() end
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+	</Frame>
 </Ui> 
