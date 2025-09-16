@@ -1,0 +1,9 @@
+## Interface: 11200
+## Title: Auto Buy Reagents
+## Notes: Automatically buys reagents for class specific spells. Supports all classes.
+## Author: Tsukeru
+## Version: 0.98
+## SavedVariablesPerCharacter: reagentTable
+## Dependencies:
+AutoBuyReagents.lua
+AutoBuyReagents.xml
