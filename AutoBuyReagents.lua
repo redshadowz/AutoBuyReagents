@@ -12,7 +12,7 @@ function AutoBuyReagents_OnLoad()
 	this:RegisterEvent("MERCHANT_SHOW")
 end
 function AutoBuyReagents_OnEvent()
-	if not reagentTable or not reagentTable[1] or not reagentTable[1][1] then reagentTable = { {0,nil},{0,nil},{0,nil},{0,nil} } end
+	if not reagentTable or not reagentTable[1] or type(reagentTable[1]) ~= "table" then reagentTable = { {0,nil},{0,nil},{0,nil},{0,nil} } end
 	AutoBuyReagents_GetReagents()
 	if rCaster[ABR_UnitClass] then reagents[ABR_UnitClass][4] = rWater[math.min(floor((UnitLevel("player")+15)/10),6)] else reagents[ABR_UnitClass][4] = rFood[math.min(floor((UnitLevel("player")+10)/10),6)] end
 	if AutoBuyReagents_DoesMerchantHaveReagents() then
