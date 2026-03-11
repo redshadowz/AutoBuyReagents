@@ -7,12 +7,26 @@ local rCaster = { DRUID = true, HUNTER = true, PALADIN = true, PRIEST = true, SH
 local rDruidRebirth = { 17034,17035,17036,17037,17038 }
 local rDruidGOTW = { 17021,17026 }
 local rPriestPrayer = { 17028,17029 }
-
+reagentTable = {}
 function AutoBuyReagents_OnLoad()
 	this:RegisterEvent("MERCHANT_SHOW")
 end
 function AutoBuyReagents_OnEvent()
-	if not reagentTable or not reagentTable[1] or type(reagentTable[1]) ~= "table" then reagentTable = { {0,nil},{0,nil},{0,nil},{0,nil} } end
+	if not reagentTable or not reagentTable[1] or type(reagentTable[1]) ~= "table" then
+		if ABR_UnitClass == "DRUID" then
+			reagentTable = { {20,nil},{20,nil},{20,nil},{20,nil} }
+		elseif ABR_UnitClass == "PRIEST" then
+			reagentTable = { {20,nil},{0,nil},{0,nil},{20,nil} }
+		elseif ABR_UnitClass == "MAGE" then
+			reagentTable = { {20,nil},{10,nil},{10,nil},{0,nil} }
+		elseif ABR_UnitClass == "PALADIN" then
+			reagentTable = { {5,nil},{100,nil},{0,nil},{20,nil} }
+		elseif ABR_UnitClass == "SHAMAN" then
+			reagentTable = { {5,nil},{0,nil},{0,nil},{20,nil} }
+		else
+			reagentTable = { {0,nil},{0,nil},{0,nil},{20,nil} }
+		end
+	end
 	AutoBuyReagents_GetReagents()
 	if rCaster[ABR_UnitClass] then reagents[ABR_UnitClass][4] = rWater[math.min(floor((UnitLevel("player")+15)/10),6)] else reagents[ABR_UnitClass][4] = rFood[math.min(floor((UnitLevel("player")+10)/10),6)] end
 	if AutoBuyReagents_DoesMerchantHaveReagents() then
@@ -37,9 +51,6 @@ function AutoBuyReagents_LoadPresets()
 		end
 	end
 end
-function AutoBuyReagents_Out(text)
-	DEFAULT_CHAT_FRAME:AddMessage(text)
-end
 function AutoBuyReagents_GetSpellInfo(spellName)
     local spellNamei,spellRank,spellCache
     for i=1, 500 do
@@ -51,14 +62,14 @@ function AutoBuyReagents_GetSpellInfo(spellName)
 			spellCache = tonumber(spellRank)
         end
     end
-    return spellCache;
+    return spellCache
 end
 function AutoBuyReagents_GetReagents()
 	reagents[ABR_UnitClass] = {}
 	if ABR_UnitClass == "DRUID" then
-		reagents[ABR_UnitClass][1] = rDruidRebirth[AutoBuyReagents_GetSpellInfo("Rebirth")]
+		if AutoBuyReagents_GetSpellInfo("Rebirth") then reagents[ABR_UnitClass][1] = rDruidRebirth[1] end
 		reagents[ABR_UnitClass][2] = rDruidGOTW[AutoBuyReagents_GetSpellInfo("Gift of the Wild")]
-		if reagents[ABR_UnitClass][1] and reagents[ABR_UnitClass][1] ~= 17034 then reagents[ABR_UnitClass][3] = 17034 end
+		if rDruidRebirth[AutoBuyReagents_GetSpellInfo("Rebirth")] ~= 1 then reagents[ABR_UnitClass][3] = rDruidRebirth[AutoBuyReagents_GetSpellInfo("Rebirth")] end
 	elseif ABR_UnitClass == "PRIEST" then
 		reagents[ABR_UnitClass][1] = rPriestPrayer[AutoBuyReagents_GetSpellInfo("Prayer of Fortitude")]
 		if reagents[ABR_UnitClass][1] then
@@ -134,17 +145,17 @@ function AutoBuyReagents_BuyReagents()
 	for i=1, 4 do
 		if reagentTable[i][2] and merchantIndexes[i] and numReagentsTable[i] < reagentTable[i][1]  then
 			local numBuy = reagentTable[i][1] - numReagentsTable[i]
-			local maxBuy = 20;
-			local countBy = 20;
+			local maxBuy = 20
+			local countBy = 20
 			if reagents[ABR_UnitClass][i] == 21177 then maxBuy = 1 countBy = 20 -- Symbol of Kings
 			elseif reagents[ABR_UnitClass][i] == 17033 then maxBuy = 5 countBy = 5 -- Symbol of Divinity
 			elseif i == 4 then maxBuy = 1 countBy = 5 end -- Water/Food
 			while numBuy >= countBy do
-				BuyMerchantItem(merchantIndexes[i], maxBuy);
-				numBuy = numBuy - countBy;
+				BuyMerchantItem(merchantIndexes[i], maxBuy)
+				numBuy = numBuy - countBy
 			end					
 			if numBuy < maxBuy and numBuy > 0 then
-				BuyMerchantItem( merchantIndexes[i], numBuy);
+				BuyMerchantItem( merchantIndexes[i], numBuy)
 			end
 		end
 	end
