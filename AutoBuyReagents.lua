@@ -12,7 +12,7 @@ function AutoBuyReagents_OnLoad()
 	this:RegisterEvent("MERCHANT_SHOW")
 end
 function AutoBuyReagents_OnEvent()
-	if not reagentTable or not reagentTable[1] or type(reagentTable[1]) ~= "table" then
+	if not reagentTable or not reagentTable[1] or not reagentTable[1][1] then
 		if ABR_UnitClass == "DRUID" then
 			reagentTable = { {20,nil},{20,nil},{20,nil},{20,nil} }
 		elseif ABR_UnitClass == "PRIEST" then
